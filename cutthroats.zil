@@ -1,0 +1,67 @@
+"
+			      TOA #2
+	(c) Copyright 1984 Infocom, Inc.  All Rights Reserved.
+"
+
+<GC-MON <>>
+;<COND (<GASSIGNED? ZILCH> <GC 0 T>)
+      (T <GC 0 T 5>)>
+<GC 0 T 5>
+
+<BLOAT 90000 0 0 3500 0 0 0 0 0 512>
+
+;<SETG SHORT-STRINGS 2>
+
+<SET REDEFINE T>
+
+;<GLOBAL BIGFIX 10000>
+
+<OR <GASSIGNED? ZILCH>
+    <SETG WBREAKS <STRING !\" !\= !,WBREAKS>>>
+
+<DEFINE IFILE (STR "OPTIONAL" (FLOAD? <>) "AUX" (TIM <TIME>))
+	<INSERT-FILE .STR .FLOAD?>>
+
+<PRINC "CUTTHROATS: Frobozz Magic Adventure Fiction
+">
+
+<COND (<GASSIGNED? PREDGEN>
+       <ID 0>)>
+
+<IFILE "MACROS" T>
+
+<IFILE "GLOBALS" T>
+<PROPDEF SIZE 5>
+<PROPDEF CAPACITY 0>
+;<PROPDEF VALUE 0>
+
+<IFILE "SYNTAX" T>
+<ENDLOAD>
+
+<IFILE "CLOCK" T>
+<IFILE "MAIN" T>
+<IFILE "PARSER" T>
+<IFILE "VERBS" T>
+
+
+
+;"Jerry: Add your files here, as with GOAL"
+
+<IFILE "GOAL" T>
+<IFILE "ISLAND" T>
+<IFILE "BOAT" T>
+<IFILE "WRECKS" T>
+<IFILE "PEOPLE" T>
+<IFILE "EVENTS" T>
+;<COND (<NOT <GASSIGNED? PREDGEN>>
+       <CLOSE!- ,XTELLCHAN>)>
+<PRINC "
+Formerly SCUM: Interlogic Adventure Fiction
+
+
+
+
+
+
+
+Get ready!">

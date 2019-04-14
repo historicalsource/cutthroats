@@ -318,14 +318,17 @@ or QUIT): >">
 <GLOBAL Y-INBUF <ITABLE BYTE 12>>
 <GLOBAL Y-LEXV <ITABLE BYTE 10>>
 
-<ROUTINE V-VERSION ("AUX" (CNT 17))
+<ROUTINE V-VERSION ("AUX" (CNT 17) V)
+	 <SET V <BAND <GET 0 1> *3777*>>
 	 <TELL
 "CUTTHROATS|
-Copyright (c) 1984 by Infocom, Inc. All rights reserved.|
-CUTTHROATS is a trademark of Infocom, Inc.|
-Release ">
-	 <PRINTN <BAND <GET 0 1> *3777*>>
-	 <TELL " / Serial number ">
+Infocom interactive fiction - an adventure story|
+Copyright (c) 1984 by Infocom, Inc. All rights reserved.|">
+	 ;<COND (<NOT <==? <BAND <GETB 0 1> 8> 0>>
+		<TELL"Licensed to Tandy Corporation. Version 00.00."N .V CR>)>
+	 <TELL
+"CUTTHROATS is a registered trademark of Infocom, Inc.|
+Release " N .V " / Serial number ">
 	 <REPEAT ()
 		 <COND (<G? <SET CNT <+ .CNT 1>> 23>
 			<RETURN>)
@@ -1081,7 +1084,8 @@ CR>>
 			     (T
 			      <TELL " ignores you." CR>)>)
 		      (T <TELL "You don't see " D ,PRSO " here." CR>)>)
-	       (<PRSO? ,SPEAR-CARRIER>
+	       (<AND <PRSO? ,SPEAR-CARRIER>
+		     <IN? ,SPEAR-CARRIER ,HERE>>
 		<SETG QCONTEXT ,SPEAR-CARRIER>
 		<SETG QCONTEXT-ROOM ,HERE>
 		<TELL "The " D ,PRSO>
@@ -1140,7 +1144,7 @@ your problem to the address provided in your documentation." CR>>
 
 <GLOBAL COPR-NOTICE
 " a transcript of interaction with CUTTHROATS.|
-CUTTHROATS is a trademark of Infocom, Inc.|
+CUTTHROATS is a registered trademark of Infocom, Inc.|
 Copyright (c) 1984, Infocom, Inc. All rights reserved.|">
 
 <ROUTINE V-SCRIPT ()
@@ -3061,7 +3065,9 @@ specify which preposition you'd like to use next time, like LOOK AT ">
 		       <THE? ,PRSO>
 		       <TELL D ,PRSO " doesn't need any help." CR>)>)>
 	 <TELL
-"I'm afraid you'll have to figure this out " D ,GLOBAL-SELF "." CR>>
+"I'm afraid you'll have to figure this out " D ,GLOBAL-SELF ".|
+[If you really need help, you can order an InvisiClues Hint Booklet
+and a complete map by using the order form that came in your package.]" CR>>
 
 <ROUTINE GET-COMFORTABLE (OBJ)
 	<COND (<OR <FIRST? .OBJ>

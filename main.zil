@@ -32,6 +32,7 @@
 <CONSTANT M-NAME 8>
 
 <ROUTINE GO () 
+	 <PUTB ,P-LEXV 0 59>
 ;"put interrupts on clock chain"
 	 <ENABLE <QUEUE I-UNWOUND 20>>
 	 <ENABLE <QUEUE I-BUSINESS-HOURS 60>>

@@ -1,0 +1,35 @@
+Assembling TOA.XZAP.1
+Release: 25
+
+64	Inserting TOAFREQ.XZAP.1	(  634 bytes)
+698	Inserting TOADAT.ZAP.2	(20211 bytes)
+20909	Inserting MACROS.ZAP.2	(   79 bytes)
+20988	Inserting GLOBALS.ZAP.2	( 6861 bytes)
+27849	Inserting SYNTAX.ZAP.2	(    0 bytes)
+27849	Inserting CLOCK.ZAP.2	(  316 bytes)
+28165	Inserting MAIN.ZAP.2	( 2751 bytes)
+30916	Inserting PARSER.ZAP.2	( 6165 bytes)
+37081	Inserting VERBS.ZAP.2	(15552 bytes)
+52633	Inserting GOAL.ZAP.2	( 2130 bytes)
+54763	Inserting ISLAND.ZAP.2	( 9139 bytes)
+63902	Inserting BOAT.ZAP.2	( 5419 bytes)
+69321	Inserting WRECKS.ZAP.2	( 8789 bytes)
+78110	Inserting PEOPLE.ZAP.2	(12336 bytes)
+90446	Inserting EVENTS.ZAP.2	( 8695 bytes)
+99141	Inserting TOASTR.ZAP.2	(13397 bytes)
+
+Symbols unused:
+SERIAL
+PRE-WHAT
+PRE-LOOK-ON
+PRE-LOOK-IN
+PRE-DROP
+VPRINT
+
+20157 bytes of preload.
+
+112538 bytes (110K).
+27546 bytes too large for one-disk game on ATARI.
+223 objects.
+212 globals.
+

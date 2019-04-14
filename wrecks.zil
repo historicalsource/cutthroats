@@ -172,17 +172,18 @@ Merv doesn't even like the Penguins. At this depth, narcosis takes over,
 and all that's left is to say bye to Merv...">)
 	       (<==? ,DEPTH ,OCEAN-BOTTOM>
 		<COND (,WRECK-CHOSEN
-		       <TELL-FLUTTER-TO "a shipwreck">
+		       <TELL
+"The yellow beam from your light settles on a huge jagged outcropping of
+rusted metal and barnacles. As you angle your light downward, you can
+barely make out the shape of a monstrous corroded hull, partly buried in
+the silt from its decades of slumber on the floor of the ocean." CR CR>
 		       <RETURN ,WRECK-1>)
 		      (T
-		       <TELL-FLUTTER-TO "the ocean floor">
+		       <TELL "You flutter down to the ocean floor..." CR CR>
 		       <RETURN ,OCEAN-FLOOR>)>)
 	       (T
 		<TELL "You descend another 50 feet..." CR CR>
 		<RETURN ,UNDERWATER>)>>
-
-<ROUTINE TELL-FLUTTER-TO (STR)
-	 <TELL "You flutter down to " .STR "..." CR CR>>
 
 <GLOBAL OCEAN-BOTTOM 400>
 <GLOBAL DEPTH 0>

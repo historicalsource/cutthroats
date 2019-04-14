@@ -172,7 +172,6 @@ Copyright (C) 1984 Infocom, Inc.  All rights reserved."
 	       <SETG QUOTE-FLAG <>>
 	       <COND (<NOT <FSET? <LOC ,WINNER> ,VEHBIT>>
 		      <SETG HERE <LOC ,WINNER>>)>
-	       <PUTB ,P-LEXV 0 59>
 	       <COND (<NOT ,SUPER-BRIEF> <CRLF>)>	       
 	       <TELL ">">
 	       <READ ,P-INBUF ,P-LEXV>)>
@@ -314,6 +313,7 @@ important questions that you can't ask directly.)" CR>
 	       <SETG PRSA ,V?WALK>
 	       <SETG PRSO .DIR>
 	       <SETG P-WALK-DIR .DIR>
+	       <SETG P-OFLAG <>>
 	       <RETURN T>)>
 	<COND (,P-OFLAG <ORPHAN-MERGE>)>
 	<COND (<==? <GET ,P-ITBL ,P-VERB> 0>
@@ -472,8 +472,16 @@ important questions that you can't ask directly.)" CR>
 
 <ROUTINE ORPHAN-MERGE ("AUX" (CNT -1) TEMP VERB BEG END (ADJ <>) WRD) 
    <SETG P-OFLAG <>>
-   <COND (<WT? <GET <GET ,P-ITBL ,P-VERBN> 0> ,PS?ADJECTIVE ,P1?ADJECTIVE>
-	  <SET ADJ T>)>
+   <COND (<WT? <SET WRD <GET <GET ,P-ITBL ,P-VERBN> 0>>
+	       ,PS?ADJECTIVE ,P1?ADJECTIVE>
+	  <SET ADJ T>)
+	 (<AND <WT? .WRD ,PS?OBJECT ,P1?OBJECT>
+	       <EQUAL? ,P-NCN 0>>
+	  <PUT ,P-ITBL ,P-VERB 0>
+	  <PUT ,P-ITBL ,P-VERBN 0>
+	  <PUT ,P-ITBL ,P-NC1 <REST ,P-LEXV 2>>
+	  <PUT ,P-ITBL ,P-NC1L <REST ,P-LEXV 6>>
+	  <SETG P-NCN 1>)>
    <COND (<AND <NOT <0? <SET VERB <GET ,P-ITBL ,P-VERB>>>>
 	       <NOT .ADJ>
 	       <NOT <==? .VERB <GET ,P-OTBL ,P-VERB>>>>
@@ -1139,6 +1147,7 @@ important questions that you can't ask directly.)" CR>
 		<RFALSE>)>)
 	(<AND <0? .LEN> .GCHECK>
 	 <COND (.VRB
+		<SETG P-SLOCBITS .XBITS>
 		<COND (,LIT
 		       ;"Changed 6/10/83 - MARC"
 		       <OBJ-FOUND ,NOT-HERE-OBJECT .TBL>

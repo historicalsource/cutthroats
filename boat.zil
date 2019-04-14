@@ -1237,6 +1237,7 @@ after its last trawling expedition." ,SPARE-PARTS-STR CR>)>>
 		<PERFORM ,V?EXAMINE ,DRILL>
 		<RTRUE>)
 	       (<AND <VERB? OPEN>
+		     <PRSO? ,DRILL>
 		     <IN? ,BATTERY ,DRILL>
 		     <==? <GETP ,HERE ,P?LINE> ,UNDERWATER-LINE-C>
 		     <NOT <AIRTIGHT-ROOM?>>>
