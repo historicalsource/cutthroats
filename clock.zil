@@ -1,0 +1,108 @@
+"CLOCK for TOA #2
+Copyright (C) 1984 Infocom, Inc.  All rights reserved."
+
+<CONSTANT C-TABLELEN 246>
+
+<GLOBAL C-TABLE <ITABLE NONE %<COND (<GASSIGNED? PREDGEN> 123) (T 246)>>>
+
+;<GLOBAL C-DEMONS 300>
+
+<GLOBAL C-INTS 246>
+
+<CONSTANT C-INTLEN 6>
+
+<CONSTANT C-ENABLED? 0>
+
+<CONSTANT C-TICK 1>
+
+<CONSTANT C-RTN 2>
+
+;<ROUTINE DEMON (RTN TICK "AUX" CINT)
+	 #DECL ((RTN) ATOM (TICK) FIX (CINT) <PRIMTYPE VECTOR>)
+	 <PUT <SET CINT <INT .RTN T>> ,C-TICK .TICK>
+	 .CINT>
+
+<ROUTINE QUEUE (RTN TICK "AUX" CINT)
+	 #DECL ((RTN) ATOM (TICK) FIX (CINT) <PRIMTYPE VECTOR>)
+	 <PUT <SET CINT <INT .RTN>> ,C-TICK .TICK>
+	 .CINT>
+
+<ROUTINE INT (RTN "AUX" E C INT)
+	 #DECL ((RTN) ATOM (E C INT) <PRIMTYPE VECTOR>)
+	 <SET E <REST ,C-TABLE ,C-TABLELEN>>
+	 <SET C <REST ,C-TABLE ,C-INTS>>
+	 <REPEAT ()
+		 <COND (<==? .C .E>
+			<SETG C-INTS <- ,C-INTS ,C-INTLEN>>
+			;<AND .DEMON <SETG C-DEMONS <- ,C-DEMONS ,C-INTLEN>>>
+			<SET INT <REST ,C-TABLE ,C-INTS>>
+			<PUT .INT ,C-RTN .RTN>
+			<RETURN .INT>)
+		       (<EQUAL? <GET .C ,C-RTN> .RTN> <RETURN .C>)>
+		 <SET C <REST .C ,C-INTLEN>>>>
+
+<ROUTINE ENABLED? (RTN "AUX" C E)
+	 <SET E <REST ,C-TABLE ,C-TABLELEN>>
+	 <SET C <REST ,C-TABLE ,C-INTS>>
+	 <REPEAT ()
+		 <COND (<==? .C .E> <RFALSE>)
+		       (<EQUAL? <GET .C ,C-RTN> .RTN>
+			<COND (<0? <GET .C ,C-ENABLED?>> <RFALSE>)
+			      (T <RTRUE>)>)>
+		 <SET C <REST .C ,C-INTLEN>>>>
+
+<ROUTINE QUEUED? (RTN "AUX" C E)
+	 <SET E <REST ,C-TABLE ,C-TABLELEN>>
+	 <SET C <REST ,C-TABLE ,C-INTS>>
+	 <REPEAT ()
+		 <COND (<==? .C .E> <RFALSE>)
+		       (<EQUAL? <GET .C ,C-RTN> .RTN>
+			<COND (<OR <0? <GET .C ,C-ENABLED?>>
+				   <0? <GET .C ,C-TICK>>>
+			       <RFALSE>)
+			      (T <RTRUE>)>)>
+		 <SET C <REST .C ,C-INTLEN>>>>
+
+<GLOBAL CLOCK-WAIT <>>
+
+<ROUTINE CLOCKER ("AUX" C E TICK (FLG <>) VAL)
+	 #DECL ((C E) <PRIMTYPE VECTOR> (TICK) FIX ;(FLG) ;<OR FALSE ATOM>)
+	 <COND (,CLOCK-WAIT <SETG CLOCK-WAIT <>> <RFALSE>)>
+	 <SETG PRESENT-TIME <+ ,PRESENT-TIME 1>>
+	 <COND (<G? ,PRESENT-TIME 1439>
+		<SETG PRESENT-TIME <- ,PRESENT-TIME 1440>>)>
+	 ;<COND (<G? ,PRESENT-TIME 1019>
+		<SETG BUSINESS-HOURS? <>>)
+	       (<G? ,PRESENT-TIME 539>
+		<SETG BUSINESS-HOURS? T>)>
+	 <COND (,WATCH-WOUND
+		<COND (<G? <SETG WATCH-MOVES <+ ,WATCH-MOVES 1>> 59>
+		       <SETG WATCH-MOVES <- ,WATCH-MOVES 60>>
+		       <COND (<G? <SETG WATCH-SCORE <+ ,WATCH-SCORE 1>> 11>
+		       	      <SETG WATCH-SCORE 0>)>)>)>
+	 <WATCH-UPDATE>
+	 <SET C <REST ,C-TABLE ,C-INTS ;<COND (,P-WON ,C-INTS) (T ,C-DEMONS)>>>
+	 <SET E <REST ,C-TABLE ,C-TABLELEN>>
+	 <REPEAT ()
+		 <COND (<==? .C .E> <RETURN .FLG>)
+		       (<NOT <0? <GET .C ,C-ENABLED?>>>
+			<SET TICK <GET .C ,C-TICK>>
+			<COND (<0? .TICK>)
+			      (T
+			       <PUT .C ,C-TICK <- .TICK 1>>
+			       <COND (<AND <NOT <G? .TICK 1>>
+				           <SET VAL <APPLY <GET .C ,C-RTN>>>>
+				      ;<COND (,DEBUG
+					     <TELL "[Interrupt returning T.]" CR>)>
+				      <COND (<OR <NOT .FLG>
+						 <==? .VAL ,M-FATAL>>
+					     <SET FLG .VAL>)>)>)>)>
+		 <SET C <REST .C ,C-INTLEN>>>>
+
+<ROUTINE WATCH-UPDATE ()
+	 <COND (<IN? ,WATCH ,PLAYER>
+		<SETG MOVES ,WATCH-MOVES>
+		<SETG SCORE ,WATCH-SCORE>)
+	       (T
+		<SETG MOVES 99>
+		<SETG SCORE 111>)>>
